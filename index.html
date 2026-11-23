@@ -220,7 +220,7 @@
 
   const altSecenekler = ["ANA KANCA", "K KANCA", "KÖPRÜ", "ARABA", "YARDIMCI SİSTEMLER"];
 
-  async function girisYap() {
+   async function girisYap() {
     const kod = document.getElementById("kullaniciKodu").value.trim().toUpperCase();
     const sifre = document.getElementById("kullaniciSifre").value.trim();
     const buton = document.getElementById("girisButon");
@@ -250,6 +250,7 @@
     if (gecerliSifre === sifre) {
       aktifKullanici = YETKILI_LISTESI[kod];
       aktifKod = kod;
+      localStorage.setItem("vincBakimAktifKod", kod);
       document.getElementById("hataMesaji").style.display = "none";
       document.getElementById("loginEkrani").style.display = "none";
       document.getElementById("uygulamaEkrani").style.display = "flex";
@@ -264,12 +265,10 @@
         rozet.className = "rol-user";
       }
       history.pushState({ sayfa: "ana" }, "");
-     localStorage.setItem("vincBakimAktifKod", kod);
     } else {
       document.getElementById("hataMesaji").style.display = "block";
     }
   }
-
   function profilMenuAcKapa(event) {
     if (event) event.stopPropagation();
     document.getElementById("profilDropdown").classList.toggle("acik");
@@ -535,8 +534,8 @@
 
     verileriGetirVeCiz();
   }
-   // Sayfa yenilendiğinde veya tekrar açıldığında oturumu korur
-  window.addEventListener("DOMContentLoaded", function() {
+    // Sayfa yenilendiğinde veya tekrar açıldığında doğrudan oturumu açar
+  (function() {
     const kayitliKod = localStorage.getItem("vincBakimAktifKod");
     if (kayitliKod && YETKILI_LISTESI[kayitliKod]) {
       aktifKullanici = YETKILI_LISTESI[kayitliKod];
@@ -554,9 +553,8 @@
       }
       history.replaceState({ sayfa: "ana" }, "");
     }
-  });
+  })();
 
- 
 </script>
 
 </body>
