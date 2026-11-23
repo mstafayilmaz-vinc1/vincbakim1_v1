@@ -344,7 +344,8 @@
     const yil = d.getFullYear();
     const saat = ("0" + d.getHours()).slice(-2);
     const dakika = ("0" + d.getMinutes()).slice(-2);
-    const tarih = `${gun}/${ay}/${yil} ${saat}:${dakika}`;   
+    const tarih = `'${gun}/${ay}/${yil} ${saat}:${dakika}`;
+  
    const birimAdi = `${seciliAna} > ${seciliAlt} > ${seciliEkipman}`;
 
     const url = `${SCRIPT_URL}?action=ekle&birim=${encodeURIComponent(birimAdi)}&yazi=${encodeURIComponent(metin)}&tarih=${encodeURIComponent(tarih)}&yazar=${encodeURIComponent(aktifKullanici.ad)}`;
