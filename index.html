@@ -165,9 +165,7 @@
     </main>
   </div>
 </div>
-
 <script>
-  // YÖNETİCİ VE NORMAL KULLANICI SİCİL LİSTESİ
   const YONETICI_SICILLER = [
     "208337", "206041", "208838", "208784", "206412", "208205"
   ];
@@ -188,7 +186,6 @@
     YETKILI_LISTESI[sicil] = { sifre: sicil.slice(-4), ad: "Sicil: " + sicil, rol: "user" };
   });
 
-  // BURAYA EN SON ÇALIŞAN APPS SCRIPT WEB UYGULAMASI URL'NİZİ YAPIŞTIRIN
   const SCRIPT_URL = "https://google.com";
 
   let aktifKullanici = null;
@@ -215,7 +212,6 @@
 
     let gecerliSifre = YETKILI_LISTESI[kod].sifre;
 
-    // Google E-Tablo'daki Sifreler sekmesinden kullanıcının değiştirdiği özel şifre varsa onu kontrol et
     try {
       const cevap = await fetch(`${SCRIPT_URL}?action=sifreleriGetir`);
       const ozelSifreler = await cevap.json();
@@ -304,7 +300,6 @@
     document.getElementById("loginEkrani").style.display = "flex";
     document.getElementById("kullaniciSifre").value = "";
   }
-
   function mobilMenuAcKapa() {
     document.getElementById("solMenu").classList.toggle("mobil-acik");
   }
@@ -395,4 +390,75 @@
       ` : `<div class="denetim-bar"><span>Son ${gosterilecekler.length} kayıt gösteriliyor</span></div>`;
 
       const islemBasligi = aktifKullanici.rol === "admin" ? "<th>İşlem</th>" : "";
+
+      document.getElementById("icerikAlani").innerHTML = `
+        <button type="button" class="geri-btn" onclick="bolumSec('${seciliAna}', '${seciliAlt}')">&larr; ${seciliAlt} Seçeneklerine Dön</button>
+        <div class="breadcrumb">${seciliAna} &nbsp;/&nbsp; ${seciliAlt} &nbsp;/&nbsp; ${seciliEkipman}</div>
+        <h1>${seciliAlt} - ${seciliEkipman}</h1>
+        
+        <div class="ekle-formu">
+          <input type="text" id="yeniIsKutusu" placeholder="Yapılan işi yazın..." onkeydown="if(event.key==='Enter') veriEkle()">
+          <button type="button" id="ekleButon" onclick="veriEkle()">Veri Ekle</button>
+        </div>
+
+        ${yoneticiBari}
+
+        <div class="tablo-kapsayici">
+          <table class="veri-tablosu">
+            <thead>
+              <tr>
+                <th>Yapılan İş / Yazı</th>
+                <th>Tarih</th>
+                <th>Kimin Yazdığı</th>
+                ${islemBasligi}
+              </tr>
+            </thead>
+            <tbody>${satirlar}</tbody>
+          </table>
+        </div>
+      `;
+    } catch (e) {
+      document.getElementById("icerikAlani").innerHTML = `<p style="color:#dc2626; padding:20px;">Bağlantı Hatası: <strong>${e.message}</strong></p>`;
+    }
+  }
+
+  async function veriEkle() {
+    const kutu = document.getElementById("yeniIsKutusu");
+    const buton = document.getElementById("ekleButon");
+    const metin = kutu.value.trim();
+    if (!metin) return;
+
+    buton.disabled = true;
+    buton.textContent = "Kaydediliyor...";
+
+    const d = new Date();
+    const gun = ("0" + d.getDate()).slice(-2);
+    const ay = ("0" + (d.getMonth() + 1)).slice(-2);
+    const yil = d.getFullYear();
+    const saat = ("0" + d.getHours()).slice(-2);
+    const dakika = ("0" + d.getMinutes()).slice(-2);
+    const tarih = `'${gun}/${ay}/${yil} ${saat}:${dakika}`;
+
+    const birimAdi = `${seciliAna} > ${seciliAlt} > ${seciliEkipman}`;
+
+    const url = `${SCRIPT_URL}?action=ekle&birim=${encodeURIComponent(birimAdi)}&yazi=${encodeURIComponent(metin)}&tarih=${encodeURIComponent(tarih)}&yazar=${encodeURIComponent(aktifKullanici.ad)}`;
+    await fetch(url);
+
+    verileriGetirVeCiz();
+  }
+
+  async function kayitSil(kayitId) {
+    if (aktifKullanici.rol !== "admin") return;
+    if (!confirm("Bu kaydı kalıcı olarak silmek istediğinize emin misiniz?")) return;
+
+    const url = `${SCRIPT_URL}?action=sil&id=${encodeURIComponent(kayitId)}`;
+    await fetch(url);
+
+    verileriGetirVeCiz();
+  }
+</script>
+
+</body>
+</html>
+
 
