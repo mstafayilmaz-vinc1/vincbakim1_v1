@@ -264,6 +264,7 @@
         rozet.className = "rol-user";
       }
       history.pushState({ sayfa: "ana" }, "");
+     localStorage.setItem("vincBakimAktifKod", kod);
     } else {
       document.getElementById("hataMesaji").style.display = "block";
     }
@@ -331,6 +332,7 @@
 
   function cikisYap() {
     aktifKullanici = null;
+    localStorage.removeItem("vincBakimAktifKod");
     aktifKod = "";
     tumAltMenuleriKapat();
     document.getElementById("uygulamaEkrani").style.display = "none";
@@ -533,6 +535,28 @@
 
     verileriGetirVeCiz();
   }
+   // Sayfa yenilendiğinde veya tekrar açıldığında oturumu korur
+  window.addEventListener("DOMContentLoaded", function() {
+    const kayitliKod = localStorage.getItem("vincBakimAktifKod");
+    if (kayitliKod && YETKILI_LISTESI[kayitliKod]) {
+      aktifKullanici = YETKILI_LISTESI[kayitliKod];
+      aktifKod = kayitliKod;
+      document.getElementById("loginEkrani").style.display = "none";
+      document.getElementById("uygulamaEkrani").style.display = "flex";
+      document.getElementById("aktifKullaniciAdi").textContent = aktifKullanici.ad;
+      const rozet = document.getElementById("aktifRolRozeti");
+      if (aktifKullanici.rol === "admin") {
+        rozet.textContent = "YÖNETİCİ";
+        rozet.className = "rol-admin";
+      } else {
+        rozet.textContent = "PERSONEL";
+        rozet.className = "rol-user";
+      }
+      history.replaceState({ sayfa: "ana" }, "");
+    }
+  });
+
+ 
 </script>
 
 </body>
