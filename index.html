@@ -17,63 +17,82 @@
   .hata-mesaji { color: #dc2626; font-size: 13px; margin-top: 10px; display: none; font-weight: 600; }
 
   #uygulamaEkrani { display: none; min-height: 100vh; flex-direction: column; }
-  .ust-bar { display: flex; justify-content: space-between; align-items: center; background: #0f172a; color: #fff; padding: 12px 20px; border-bottom: 1px solid #334155; gap: 8px; flex-wrap: wrap; }
-  .kullanici-rozet { font-size: 13px; display: flex; align-items: center; gap: 8px; }
-  .rol-admin { background: #dc2626; color: #fff; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
-  .rol-user { background: #10b981; color: #fff; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
-  .ust-butonlar { display: flex; gap: 8px; }
-  .sifre-btn { background: #0284c7; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; }
-  .cikis-btn { background: #334155; color: #e2e8f0; border: none; padding: 6px 12px; border-radius: 4px; font-size: 12px; cursor: pointer; }
+  .ust-bar { display: flex; justify-content: space-between; align-items: center; background: #0f172a; color: #fff; padding: 10px 16px; border-bottom: 1px solid #334155; }
+  
+  /* Sağ Üst Profil / Sicil Menüsü */
+  .profil-kapsayici { position: relative; margin-left: auto; }
+  .profil-tetik { display: flex; align-items: center; gap: 6px; background: #1e293b; border: 1px solid #334155; color: #fff; padding: 6px 11px; border-radius: 6px; font-size: 12px; cursor: pointer; }
+  .rol-admin { background: #dc2626; color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; }
+  .rol-user { background: #10b981; color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; }
+  .profil-menu { display: none; position: absolute; right: 0; top: 115%; background: #fff; border: 1px solid #cbd5e1; border-radius: 6px; box-shadow: 0 8px 20px rgba(0,0,0,0.25); min-width: 165px; z-index: 300; overflow: hidden; }
+  .profil-menu.acik { display: block; }
+  .profil-menu button { width: 100%; text-align: left; padding: 11px 14px; border: none; background: #fff; color: #1e293b; font-size: 13px; font-weight: 600; cursor: pointer; border-bottom: 1px solid #f1f5f9; }
+  .profil-menu button:hover { background: #f0f9ff; color: #0284c7; }
+  .profil-menu button.cikis-item { color: #dc2626; border-bottom: none; }
 
-  .ana-govde { display: flex; flex: 1; }
-  .sidebar { width: 250px; background-color: #1e293b; color: #fff; flex-shrink: 0; }
-  .sidebar-baslik { padding: 18px; text-align: center; font-size: 19px; font-weight: 700; color: #38bdf8; border-bottom: 1px solid #334155; }
+  .ana-govde { display: flex; flex: 1; position: relative; }
+  .sidebar { width: 230px; background-color: #1e293b; color: #fff; flex-shrink: 0; }
+  .sidebar-baslik { padding: 15px; text-align: center; font-size: 17px; font-weight: 700; color: #38bdf8; border-bottom: 1px solid #334155; }
   
   ul { list-style: none; }
   li { position: relative; }
-  .sidebar > ul > li > a { display: flex; justify-content: space-between; padding: 14px 20px; color: #e2e8f0; text-decoration: none; font-size: 15px; cursor: pointer; border-bottom: 1px solid #283548; }
+  .sidebar > ul > li > a { display: flex; justify-content: space-between; padding: 12px 16px; color: #e2e8f0; text-decoration: none; font-size: 14px; cursor: pointer; border-bottom: 1px solid #283548; }
   .sidebar > ul > li:hover > a, .sidebar > ul > li.acik > a { background-color: #334155; color: #38bdf8; }
 
-  .sidebar > ul > li > ul { display: none; position: absolute; left: 100%; top: 0; width: 220px; background-color: #0f172a; border-left: 3px solid #38bdf8; box-shadow: 4px 4px 12px rgba(0,0,0,0.25); z-index: 100; }
-  .sidebar > ul > li:hover > ul, .sidebar > ul > li.acik > ul { display: block; }
-  .sidebar > ul > li > ul > li > a { display: block; padding: 12px 18px; color: #cbd5e1; text-decoration: none; font-size: 14px; border-bottom: 1px solid #1e293b; cursor: pointer; }
+  .sidebar > ul > li > ul { display: none; position: absolute; left: 100%; top: 0; width: 200px; background-color: #0f172a; border-left: 3px solid #38bdf8; box-shadow: 4px 4px 12px rgba(0,0,0,0.25); z-index: 100; }
+  @media (min-width: 769px) {
+    .sidebar > ul > li:hover > ul { display: block; }
+  }
+  .sidebar > ul > li.acik > ul { display: block; }
+  .sidebar > ul > li > ul > li > a { display: block; padding: 10px 16px; color: #cbd5e1; text-decoration: none; font-size: 13px; border-bottom: 1px solid #1e293b; cursor: pointer; }
   .sidebar > ul > li > ul > li > a:hover { background-color: #1e293b; color: #38bdf8; }
 
-  .content { flex: 1; padding: 25px; }
-  .card { background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-  .breadcrumb { font-size: 13px; color: #64748b; margin-bottom: 8px; font-weight: 600; }
-  .card h1 { color: #1e293b; margin-bottom: 18px; font-size: 22px; }
+  .content { flex: 1; padding: 22px; }
+  .card { background: #fff; padding: 22px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+  .breadcrumb { font-size: 12px; color: #64748b; margin-bottom: 6px; font-weight: 600; }
+  .card h1 { color: #1e293b; margin-bottom: 16px; font-size: 20px; }
 
-  .secenek-izgarasi { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 15px; }
-  .secenek-karti { background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; padding: 22px 15px; text-align: center; cursor: pointer; transition: all 0.2s; color: #1e293b; font-weight: 700; font-size: 15px; }
+  .secenek-izgarasi { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 12px; }
+  .secenek-karti { background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; padding: 18px 12px; text-align: center; cursor: pointer; transition: all 0.2s; color: #1e293b; font-weight: 700; font-size: 14px; }
   .secenek-karti:hover { border-color: #38bdf8; background: #f0f9ff; color: #0284c7; }
 
-  .geri-btn { display: inline-block; margin-bottom: 15px; padding: 8px 14px; background: #e2e8f0; color: #334155; border-radius: 4px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; }
-  .ekle-formu { display: flex; gap: 10px; margin-bottom: 20px; background: #f8fafc; padding: 12px; border-radius: 6px; border: 1px solid #e2e8f0; }
-  .ekle-formu input { flex: 1; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; }
-  .ekle-formu button { background-color: #10b981; color: #fff; border: none; padding: 10px 18px; border-radius: 4px; font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+  .geri-btn { display: inline-block; margin-bottom: 14px; padding: 7px 12px; background: #e2e8f0; color: #334155; border-radius: 4px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; }
+  .ekle-formu { display: flex; gap: 8px; margin-bottom: 18px; background: #f8fafc; padding: 10px; border-radius: 6px; border: 1px solid #e2e8f0; }
+  .ekle-formu input { flex: 1; padding: 9px 11px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; }
+  .ekle-formu button { background-color: #10b981; color: #fff; border: none; padding: 9px 15px; border-radius: 4px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; }
 
-  .denetim-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 13px; color: #64748b; flex-wrap: wrap; gap: 8px; }
-  .arsiv-btn { background: #3b82f6; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; }
+  .denetim-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 12px; color: #64748b; flex-wrap: wrap; gap: 8px; }
+  .arsiv-btn { background: #3b82f6; color: #fff; border: none; padding: 5px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; }
   .sil-btn { background: #ef4444; color: #fff; border: none; padding: 4px 8px; border-radius: 4px; font-size: 11px; cursor: pointer; }
 
   .tablo-kapsayici { overflow-x: auto; }
-  .veri-tablosu { width: 100%; border-collapse: collapse; min-width: 450px; }
-  .veri-tablosu th { background-color: #1e293b; color: #fff; text-align: left; padding: 11px 12px; font-size: 13px; }
-  .veri-tablosu td { padding: 11px 12px; border-bottom: 1px solid #e2e8f0; color: #334155; font-size: 13px; }
+  .veri-tablosu { width: 100%; border-collapse: collapse; min-width: 420px; }
+  .veri-tablosu th { background-color: #1e293b; color: #fff; text-align: left; padding: 10px 11px; font-size: 12px; }
+  .veri-tablosu td { padding: 10px 11px; border-bottom: 1px solid #e2e8f0; color: #334155; font-size: 13px; }
   .veri-tablosu tr:nth-child(even) { background-color: #f8fafc; }
 
-  .mobil-menu-btn { display: none; background: #38bdf8; color: #0f172a; border: none; padding: 8px 14px; border-radius: 4px; font-weight: 700; font-size: 14px; cursor: pointer; }
+  .mobil-menu-btn { display: none; background: #38bdf8; color: #0f172a; border: none; padding: 7px 12px; border-radius: 4px; font-weight: 700; font-size: 13px; cursor: pointer; }
 
+  /* Kompakt Mobil Menü Düzeni */
   @media (max-width: 768px) {
-    .ana-govde { flex-direction: column; }
     .mobil-menu-btn { display: inline-block; }
-    .sidebar { width: 100%; display: none; }
+    .sidebar { 
+      display: none; 
+      position: absolute; 
+      top: 0; 
+      left: 0; 
+      width: 225px; 
+      max-width: 78%; 
+      box-shadow: 4px 8px 20px rgba(0,0,0,0.35); 
+      z-index: 250; 
+      border-bottom-right-radius: 8px;
+    }
     .sidebar.mobil-acik { display: block; }
-    .sidebar > ul > li > ul { position: static; width: 100%; border-left: none; border-top: 2px solid #38bdf8; box-shadow: none; }
-    .sidebar > ul > li > ul > li > a { padding-left: 35px; }
-    .content { padding: 15px; }
-    .card { padding: 18px; }
+    .sidebar-baslik { display: none; }
+    .sidebar > ul > li > ul { position: static; width: 100%; border-left: none; border-top: 1px solid #38bdf8; box-shadow: none; }
+    .sidebar > ul > li > ul > li > a { padding-left: 26px; font-size: 13px; }
+    .content { padding: 14px; }
+    .card { padding: 16px; }
   }
 </style>
 </head>
@@ -93,13 +112,17 @@
 <div id="uygulamaEkrani">
   <div class="ust-bar">
     <button type="button" class="mobil-menu-btn" onclick="mobilMenuAcKapa()">&#9776; MENÜ</button>
-    <div class="kullanici-rozet">
-      <span id="aktifKullaniciAdi"></span>
-      <span id="aktifRolRozeti"></span>
-    </div>
-    <div class="ust-butonlar">
-      <button type="button" class="sifre-btn" onclick="sifreDegistirEkraniAc()">Şifre Değiştir</button>
-      <button type="button" class="cikis-btn" onclick="cikisYap()">Çıkış</button>
+    <div class="profil-kapsayici">
+      <button type="button" class="profil-tetik" onclick="profilMenuAcKapa(event)">
+        <span>&#128100;</span>
+        <span id="aktifKullaniciAdi"></span>
+        <span id="aktifRolRozeti"></span>
+        <span>&#9662;</span>
+      </button>
+      <div class="profil-menu" id="profilDropdown">
+        <button type="button" onclick="sifreDegistirEkraniAc()">&#128273; Şifre Değiştir</button>
+        <button type="button" class="cikis-item" onclick="cikisYap()">&#10162; Çıkış Yap</button>
+      </div>
     </div>
   </div>
 
@@ -107,50 +130,50 @@
     <nav class="sidebar" id="solMenu">
       <div class="sidebar-baslik">VİNÇ BAKIM 1</div>
       <ul>
-        <li onclick="mobildeAltAc(this)">
+        <li onclick="mobildeAltAc(event, this)">
           <a><span>ÇELİKHANE</span><span>&#9656;</span></a>
           <ul>
-            <li><a onclick="bolumSec('ÇELİKHANE', 'Alt Bölüm 1.1')">Alt Bölüm 1.1</a></li>
-            <li><a onclick="bolumSec('ÇELİKHANE', 'Alt Bölüm 1.2')">Alt Bölüm 1.2</a></li>
-            <li><a onclick="bolumSec('ÇELİKHANE', 'Alt Bölüm 1.3')">Alt Bölüm 1.3</a></li>
-            <li><a onclick="bolumSec('ÇELİKHANE', 'Alt Bölüm 1.4')">Alt Bölüm 1.4</a></li>
-            <li><a onclick="bolumSec('ÇELİKHANE', 'Alt Bölüm 1.5')">Alt Bölüm 1.5</a></li>
-            <li><a onclick="bolumSec('ÇELİKHANE', 'Alt Bölüm 1.6')">Alt Bölüm 1.6</a></li>
+            <li><a onclick="bolumSec(event, 'ÇELİKHANE', 'Alt Bölüm 1.1')">Alt Bölüm 1.1</a></li>
+            <li><a onclick="bolumSec(event, 'ÇELİKHANE', 'Alt Bölüm 1.2')">Alt Bölüm 1.2</a></li>
+            <li><a onclick="bolumSec(event, 'ÇELİKHANE', 'Alt Bölüm 1.3')">Alt Bölüm 1.3</a></li>
+            <li><a onclick="bolumSec(event, 'ÇELİKHANE', 'Alt Bölüm 1.4')">Alt Bölüm 1.4</a></li>
+            <li><a onclick="bolumSec(event, 'ÇELİKHANE', 'Alt Bölüm 1.5')">Alt Bölüm 1.5</a></li>
+            <li><a onclick="bolumSec(event, 'ÇELİKHANE', 'Alt Bölüm 1.6')">Alt Bölüm 1.6</a></li>
           </ul>
         </li>
-        <li onclick="mobildeAltAc(this)">
+        <li onclick="mobildeAltAc(event, this)">
           <a><span>S. DÖKÜMLER</span><span>&#9656;</span></a>
           <ul>
-            <li><a onclick="bolumSec('S. DÖKÜMLER', 'Alt Bölüm 2.1')">Alt Bölüm 2.1</a></li>
-            <li><a onclick="bolumSec('S. DÖKÜMLER', 'Alt Bölüm 2.2')">Alt Bölüm 2.2</a></li>
-            <li><a onclick="bolumSec('S. DÖKÜMLER', 'Alt Bölüm 2.3')">Alt Bölüm 2.3</a></li>
-            <li><a onclick="bolumSec('S. DÖKÜMLER', 'Alt Bölüm 2.4')">Alt Bölüm 2.4</a></li>
-            <li><a onclick="bolumSec('S. DÖKÜMLER', 'Alt Bölüm 2.5')">Alt Bölüm 2.5</a></li>
-            <li><a onclick="bolumSec('S. DÖKÜMLER', 'Alt Bölüm 2.6')">Alt Bölüm 2.6</a></li>
+            <li><a onclick="bolumSec(event, 'S. DÖKÜMLER', 'Alt Bölüm 2.1')">Alt Bölüm 2.1</a></li>
+            <li><a onclick="bolumSec(event, 'S. DÖKÜMLER', 'Alt Bölüm 2.2')">Alt Bölüm 2.2</a></li>
+            <li><a onclick="bolumSec(event, 'S. DÖKÜMLER', 'Alt Bölüm 2.3')">Alt Bölüm 2.3</a></li>
+            <li><a onclick="bolumSec(event, 'S. DÖKÜMLER', 'Alt Bölüm 2.4')">Alt Bölüm 2.4</a></li>
+            <li><a onclick="bolumSec(event, 'S. DÖKÜMLER', 'Alt Bölüm 2.5')">Alt Bölüm 2.5</a></li>
+            <li><a onclick="bolumSec(event, 'S. DÖKÜMLER', 'Alt Bölüm 2.6')">Alt Bölüm 2.6</a></li>
           </ul>
         </li>
-        <li onclick="mobildeAltAc(this)">
+        <li onclick="mobildeAltAc(event, this)">
           <a><span>Y.FIRINLER</span><span>&#9656;</span></a>
           <ul>
-            <li><a onclick="bolumSec('Y.FIRINLER', 'Alt Bölüm 3.1')">Alt Bölüm 3.1</a></li>
-            <li><a onclick="bolumSec('Y.FIRINLER', 'Alt Bölüm 3.2')">Alt Bölüm 3.2</a></li>
-            <li><a onclick="bolumSec('Y.FIRINLER', 'Alt Bölüm 3.3')">Alt Bölüm 3.3</a></li>
-            <li><a onclick="bolumSec('Y.FIRINLER', 'Alt Bölüm 3.4')">Alt Bölüm 3.4</a></li>
-            <li><a onclick="bolumSec('Y.FIRINLER', 'Alt Bölüm 3.5')">Alt Bölüm 3.5</a></li>
-            <li><a onclick="bolumSec('Y.FIRINLER', 'Alt Bölüm 3.6')">Alt Bölüm 3.6</a></li>
+            <li><a onclick="bolumSec(event, 'Y.FIRINLER', 'Alt Bölüm 3.1')">Alt Bölüm 3.1</a></li>
+            <li><a onclick="bolumSec(event, 'Y.FIRINLER', 'Alt Bölüm 3.2')">Alt Bölüm 3.2</a></li>
+            <li><a onclick="bolumSec(event, 'Y.FIRINLER', 'Alt Bölüm 3.3')">Alt Bölüm 3.3</a></li>
+            <li><a onclick="bolumSec(event, 'Y.FIRINLER', 'Alt Bölüm 3.4')">Alt Bölüm 3.4</a></li>
+            <li><a onclick="bolumSec(event, 'Y.FIRINLER', 'Alt Bölüm 3.5')">Alt Bölüm 3.5</a></li>
+            <li><a onclick="bolumSec(event, 'Y.FIRINLER', 'Alt Bölüm 3.6')">Alt Bölüm 3.6</a></li>
           </ul>
         </li>
-        <li onclick="mobildeAltAc(this)">
+        <li onclick="mobildeAltAc(event, this)">
           <a><span>SİNTER HAM.</span><span>&#9656;</span></a>
           <ul>
-            <li><a onclick="bolumSec('SİNTER HAM.', 'SİNTER 1')">SİNTER 1</a></li>
-            <li><a onclick="bolumSec('SİNTER HAM.', 'SİNTER 2')">SİNTER 2</a></li>
-            <li><a onclick="bolumSec('SİNTER HAM.', 'SİNTER 3')">SİNTER 3</a></li>
-            <li><a onclick="bolumSec('SİNTER HAM.', 'SİNTER 4')">SİNTER 4</a></li>
-            <li><a onclick="bolumSec('SİNTER HAM.', 'SİNTER 5')">SİNTER 5</a></li>
-            <li><a onclick="bolumSec('SİNTER HAM.', 'SİNTER 6')">SİNTER 6</a></li>
-            <li><a onclick="bolumSec('SİNTER HAM.', 'SİNTER 7')">SİNTER 7</a></li>
-            <li><a onclick="bolumSec('SİNTER HAM.', 'HSK 1')">HSK 1</a></li>
+            <li><a onclick="bolumSec(event, 'SİNTER HAM.', 'SİNTER 1')">SİNTER 1</a></li>
+            <li><a onclick="bolumSec(event, 'SİNTER HAM.', 'SİNTER 2')">SİNTER 2</a></li>
+            <li><a onclick="bolumSec(event, 'SİNTER HAM.', 'SİNTER 3')">SİNTER 3</a></li>
+            <li><a onclick="bolumSec(event, 'SİNTER HAM.', 'SİNTER 4')">SİNTER 4</a></li>
+            <li><a onclick="bolumSec(event, 'SİNTER HAM.', 'SİNTER 5')">SİNTER 5</a></li>
+            <li><a onclick="bolumSec(event, 'SİNTER HAM.', 'SİNTER 6')">SİNTER 6</a></li>
+            <li><a onclick="bolumSec(event, 'SİNTER HAM.', 'SİNTER 7')">SİNTER 7</a></li>
+            <li><a onclick="bolumSec(event, 'SİNTER HAM.', 'HSK 1')">HSK 1</a></li>
           </ul>
         </li>
       </ul>
@@ -186,7 +209,7 @@
     YETKILI_LISTESI[sicil] = { sifre: sicil.slice(-4), ad: "Sicil: " + sicil, rol: "user" };
   });
 
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzKRu7rKzrYiqRjDsAIdkLoCRJuxfBFnpTKZjC3PFOwGQ6W74ATk7Mxc47PrPiUuDfL/exec";
+  const SCRIPT_URL = "https://google.com";
 
   let aktifKullanici = null;
   let aktifKod = "";
@@ -234,18 +257,31 @@
       document.getElementById("aktifKullaniciAdi").textContent = aktifKullanici.ad;
       const rozet = document.getElementById("aktifRolRozeti");
       if (aktifKullanici.rol === "admin") {
-        rozet.textContent = "YÖNETİCİ / DENETÇİ";
+        rozet.textContent = "YÖNETİCİ";
         rozet.className = "rol-admin";
       } else {
-        rozet.textContent = "SAHA PERSONELİ";
+        rozet.textContent = "PERSONEL";
         rozet.className = "rol-user";
       }
+      history.pushState({ sayfa: "ana" }, "");
     } else {
       document.getElementById("hataMesaji").style.display = "block";
     }
   }
 
-  function sifreDegistirEkraniAc() {
+  function profilMenuAcKapa(event) {
+    if (event) event.stopPropagation();
+    document.getElementById("profilDropdown").classList.toggle("acik");
+  }
+
+  document.addEventListener("click", function() {
+    const pMenu = document.getElementById("profilDropdown");
+    if (pMenu) pMenu.classList.remove("acik");
+  });
+
+  function sifreDegistirEkraniAc(geriGeldi) {
+    document.getElementById("profilDropdown").classList.remove("acik");
+    if (!geriGeldi) history.pushState({ sayfa: "sifre" }, "");
     document.getElementById("icerikAlani").innerHTML = `
       <div class="breadcrumb">HESAP AYARLARI &nbsp;/&nbsp; ŞİFRE DEĞİŞTİR</div>
       <h1>Kişisel Şifre Değiştirme</h1>
@@ -296,24 +332,64 @@
   function cikisYap() {
     aktifKullanici = null;
     aktifKod = "";
+    tumAltMenuleriKapat();
     document.getElementById("uygulamaEkrani").style.display = "none";
     document.getElementById("loginEkrani").style.display = "flex";
     document.getElementById("kullaniciSifre").value = "";
   }
-  function mobilMenuAcKapa() {
-    document.getElementById("solMenu").classList.toggle("mobil-acik");
+  function tumAltMenuleriKapat() {
+    document.getElementById("solMenu").classList.remove("mobil-acik");
+    document.querySelectorAll("#solMenu > ul > li").forEach(li => li.classList.remove("acik"));
   }
 
-  function mobildeAltAc(liElement) {
-    if (window.innerWidth <= 768) {
-      liElement.classList.toggle("acik");
+  function mobilMenuAcKapa() {
+    const menu = document.getElementById("solMenu");
+    if (menu.classList.contains("mobil-acik")) {
+      tumAltMenuleriKapat();
+    } else {
+      document.querySelectorAll("#solMenu > ul > li").forEach(li => li.classList.remove("acik"));
+      menu.classList.add("mobil-acik");
     }
   }
 
-  function bolumSec(ana, alt) {
+  function mobildeAltAc(event, liElement) {
+    if (event) event.stopPropagation();
+    if (window.innerWidth <= 768) {
+      const acikMi = liElement.classList.contains("acik");
+      document.querySelectorAll("#solMenu > ul > li").forEach(li => li.classList.remove("acik"));
+      if (!acikMi) liElement.classList.add("acik");
+    }
+  }
+
+  function anaEkranaDon() {
+    document.getElementById("icerikAlani").innerHTML = `
+      <div class="breadcrumb">VİNÇ BAKIM 1</div>
+      <h1>Hoş Geldiniz</h1>
+      <p>İşlem yapmak için menüden bir bölüm seçin.</p>
+    `;
+  }
+
+  window.addEventListener("popstate", function(event) {
+    if (!aktifKullanici) return;
+    tumAltMenuleriKapat();
+    const durum = event.state ? event.state.sayfa : "ana";
+    if (durum === "birim") {
+      bolumSec(null, seciliAna, seciliAlt, true);
+    } else if (durum === "tablo") {
+      ekipmanSec(seciliEkipman, true);
+    } else if (durum === "sifre") {
+      sifreDegistirEkraniAc(true);
+    } else {
+      anaEkranaDon();
+    }
+  });
+
+  function bolumSec(event, ana, alt, geriGeldi) {
+    if (event) event.stopPropagation();
     seciliAna = ana;
     seciliAlt = alt;
-    document.getElementById("solMenu").classList.remove("mobil-acik");
+    tumAltMenuleriKapat();
+    if (!geriGeldi) history.pushState({ sayfa: "birim" }, "");
 
     let kartlarHTML = "";
     altSecenekler.forEach(ekipman => {
@@ -327,9 +403,10 @@
     `;
   }
 
-  function ekipmanSec(ekipman) {
+  function ekipmanSec(ekipman, geriGeldi) {
     seciliEkipman = ekipman;
     tumunuGoster = false;
+    if (!geriGeldi) history.pushState({ sayfa: "tablo" }, "");
     verileriGetirVeCiz();
   }
 
@@ -392,7 +469,7 @@
       const islemBasligi = aktifKullanici.rol === "admin" ? "<th>İşlem</th>" : "";
 
       document.getElementById("icerikAlani").innerHTML = `
-        <button type="button" class="geri-btn" onclick="bolumSec('${seciliAna}', '${seciliAlt}')">&larr; ${seciliAlt} Seçeneklerine Dön</button>
+        <button type="button" class="geri-btn" onclick="bolumSec(null, '${seciliAna}', '${seciliAlt}')">&larr; ${seciliAlt} Seçeneklerine Dön</button>
         <div class="breadcrumb">${seciliAna} &nbsp;/&nbsp; ${seciliAlt} &nbsp;/&nbsp; ${seciliEkipman}</div>
         <h1>${seciliAlt} - ${seciliEkipman}</h1>
         
@@ -460,5 +537,3 @@
 
 </body>
 </html>
-
-
