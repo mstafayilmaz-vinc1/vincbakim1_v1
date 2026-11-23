@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VİNÇ BAKIM 1 - Sürüm 5.0</title>
+<title>VİNÇ BAKIM 1</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
   body { background-color: #f4f6f9; color: #1e293b; }
@@ -15,13 +15,14 @@
   .login-kutu input { width: 100%; padding: 12px 15px; margin-bottom: 14px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 15px; outline: none; }
   .login-kutu button { width: 100%; padding: 12px; background: #0284c7; color: #fff; border: none; border-radius: 6px; font-size: 16px; font-weight: 600; cursor: pointer; }
   .hata-mesaji { color: #dc2626; font-size: 13px; margin-top: 10px; display: none; font-weight: 600; }
-  .surum-etiket { margin-top: 16px; font-size: 12px; color: #10b981; font-weight: 700; }
 
   #uygulamaEkrani { display: none; min-height: 100vh; flex-direction: column; }
-  .ust-bar { display: flex; justify-content: space-between; align-items: center; background: #0f172a; color: #fff; padding: 12px 20px; border-bottom: 1px solid #334155; }
+  .ust-bar { display: flex; justify-content: space-between; align-items: center; background: #0f172a; color: #fff; padding: 12px 20px; border-bottom: 1px solid #334155; gap: 8px; flex-wrap: wrap; }
   .kullanici-rozet { font-size: 13px; display: flex; align-items: center; gap: 8px; }
   .rol-admin { background: #dc2626; color: #fff; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
   .rol-user { background: #10b981; color: #fff; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+  .ust-butonlar { display: flex; gap: 8px; }
+  .sifre-btn { background: #0284c7; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; }
   .cikis-btn { background: #334155; color: #e2e8f0; border: none; padding: 6px 12px; border-radius: 4px; font-size: 12px; cursor: pointer; }
 
   .ana-govde { display: flex; flex: 1; }
@@ -81,12 +82,11 @@
 <div id="loginEkrani">
   <div class="login-kutu">
     <h2>VİNÇ BAKIM 1</h2>
-    <p>Kişisel erişim kodunuz ve şifreniz ile giriş yapın</p>
-    <input type="text" id="kullaniciKodu" placeholder="Erişim Kodu (MUSTAFA veya K001)">
+    <p>Sicil numaranız ve şifreniz ile giriş yapın</p>
+    <input type="text" id="kullaniciKodu" placeholder="Sicil Numaranız">
     <input type="password" id="kullaniciSifre" placeholder="Şifreniz" onkeydown="if(event.key==='Enter') girisYap()">
-    <button type="button" onclick="girisYap()">Giriş Yap</button>
-    <div class="hata-mesaji" id="hataMesaji">Hatalı kod veya şifre girdiniz!</div>
-    <div class="surum-etiket">SÜRÜM 5.0 - GOOGLE E-TABLO AKTİF</div>
+    <button type="button" id="girisButon" onclick="girisYap()">Giriş Yap</button>
+    <div class="hata-mesaji" id="hataMesaji">Hatalı sicil numarası veya şifre girdiniz!</div>
   </div>
 </div>
 
@@ -97,7 +97,10 @@
       <span id="aktifKullaniciAdi"></span>
       <span id="aktifRolRozeti"></span>
     </div>
-    <button type="button" class="cikis-btn" onclick="cikisYap()">Çıkış</button>
+    <div class="ust-butonlar">
+      <button type="button" class="sifre-btn" onclick="sifreDegistirEkraniAc()">Şifre Değiştir</button>
+      <button type="button" class="cikis-btn" onclick="cikisYap()">Çıkış</button>
+    </div>
   </div>
 
   <div class="ana-govde">
@@ -164,24 +167,32 @@
 </div>
 
 <script>
-  // TEK YÖNETİCİ: Mustafa Yılmaz + 110 Saha Kullanıcısı
+  // YÖNETİCİ VE NORMAL KULLANICI SİCİL LİSTESİ
+  const YONETICI_SICILLER = [
+    "208337", "206041", "208838", "208784", "206412", "208205"
+  ];
+
+  const NORMAL_SICILLER = [
+    "208652", "210077", "205839", "205305"
+  ];
+
   const YETKILI_LISTESI = {
     "MUSTAFA": { sifre: "3201", ad: "Mustafa Yılmaz", rol: "admin" }
   };
 
-  for (let i = 1; i <= 110; i++) {
-    const kod = "K" + String(i).padStart(3, "0");
-    const sifre = String(1000 + i);
-    YETKILI_LISTESI[kod] = { sifre: sifre, ad: "Personel " + i, rol: "user" };
-  }
+  YONETICI_SICILLER.forEach(sicil => {
+    YETKILI_LISTESI[sicil] = { sifre: sicil.slice(-4), ad: "Sicil: " + sicil, rol: "admin" };
+  });
 
-  YETKILI_LISTESI["K001"] = { sifre: "1001", ad: "Hasan Çelik", rol: "user" };
-  YETKILI_LISTESI["K002"] = { sifre: "1002", ad: "Ahmet Yılmaz", rol: "user" };
+  NORMAL_SICILLER.forEach(sicil => {
+    YETKILI_LISTESI[sicil] = { sifre: sicil.slice(-4), ad: "Sicil: " + sicil, rol: "user" };
+  });
 
-  // SİZİN GOOGLE E-TABLOLAR (APPS SCRIPT) WEB UYGULAMASI ADRESİNİZ
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzKRu7rKzrYiqRjDsAIdkLoCRJuxfBFnpTKZjC3PFOwGQ6W74ATk7Mxc47PrPiUuDfL/exec";
+  // BURAYA EN SON ÇALIŞAN APPS SCRIPT WEB UYGULAMASI URL'NİZİ YAPIŞTIRIN
+  const SCRIPT_URL = "https://google.com";
 
   let aktifKullanici = null;
+  let aktifKod = "";
   let seciliAna = "";
   let seciliAlt = "";
   let seciliEkipman = "";
@@ -189,12 +200,37 @@
 
   const altSecenekler = ["ANA KANCA", "K KANCA", "KÖPRÜ", "ARABA", "YARDIMCI SİSTEMLER"];
 
-  function girisYap() {
+  async function girisYap() {
     const kod = document.getElementById("kullaniciKodu").value.trim().toUpperCase();
     const sifre = document.getElementById("kullaniciSifre").value.trim();
+    const buton = document.getElementById("girisButon");
 
-    if (YETKILI_LISTESI[kod] && YETKILI_LISTESI[kod].sifre === sifre) {
+    if (!YETKILI_LISTESI[kod]) {
+      document.getElementById("hataMesaji").style.display = "block";
+      return;
+    }
+
+    buton.disabled = true;
+    buton.textContent = "Kontrol ediliyor...";
+
+    let gecerliSifre = YETKILI_LISTESI[kod].sifre;
+
+    // Google E-Tablo'daki Sifreler sekmesinden kullanıcının değiştirdiği özel şifre varsa onu kontrol et
+    try {
+      const cevap = await fetch(`${SCRIPT_URL}?action=sifreleriGetir`);
+      const ozelSifreler = await cevap.json();
+      if (ozelSifreler && ozelSifreler[kod]) {
+        gecerliSifre = ozelSifreler[kod];
+        YETKILI_LISTESI[kod].sifre = gecerliSifre;
+      }
+    } catch (e) {}
+
+    buton.disabled = false;
+    buton.textContent = "Giriş Yap";
+
+    if (gecerliSifre === sifre) {
       aktifKullanici = YETKILI_LISTESI[kod];
+      aktifKod = kod;
       document.getElementById("hataMesaji").style.display = "none";
       document.getElementById("loginEkrani").style.display = "none";
       document.getElementById("uygulamaEkrani").style.display = "flex";
@@ -213,8 +249,57 @@
     }
   }
 
+  function sifreDegistirEkraniAc() {
+    document.getElementById("icerikAlani").innerHTML = `
+      <div class="breadcrumb">HESAP AYARLARI &nbsp;/&nbsp; ŞİFRE DEĞİŞTİR</div>
+      <h1>Kişisel Şifre Değiştirme</h1>
+      <p style="font-size:13px; color:#64748b; margin-bottom:15px;">Yeni şifrenizi belirleyin (en az 4 karakter olmalıdır):</p>
+      <div style="max-width:340px;">
+        <input type="password" id="yeniSifre1" placeholder="Yeni Şifreniz" style="width:100%; padding:10px; margin-bottom:10px; border:1px solid #cbd5e1; border-radius:4px;">
+        <input type="password" id="yeniSifre2" placeholder="Yeni Şifreniz (Tekrar)" style="width:100%; padding:10px; margin-bottom:14px; border:1px solid #cbd5e1; border-radius:4px;">
+        <button type="button" id="sifreKaydetBtn" onclick="yeniSifreKaydet()" style="background:#0284c7; color:#fff; border:none; padding:10px 18px; border-radius:4px; font-weight:600; cursor:pointer;">Şifreyi Kaydet</button>
+        <div id="sifreSonucMesaj" style="margin-top:12px; font-size:13px; font-weight:600;"></div>
+      </div>
+    `;
+  }
+
+  async function yeniSifreKaydet() {
+    const s1 = document.getElementById("yeniSifre1").value.trim();
+    const s2 = document.getElementById("yeniSifre2").value.trim();
+    const mesaj = document.getElementById("sifreSonucMesaj");
+    const btn = document.getElementById("sifreKaydetBtn");
+
+    if (s1.length < 4) {
+      mesaj.style.color = "#dc2626";
+      mesaj.textContent = "Şifre en az 4 karakter olmalıdır!";
+      return;
+    }
+    if (s1 !== s2) {
+      mesaj.style.color = "#dc2626";
+      mesaj.textContent = "Girdiğiniz iki şifre birbiriyle uyuşmuyor!";
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = "Kaydediliyor...";
+
+    try {
+      await fetch(`${SCRIPT_URL}?action=sifreDegistir&kod=${encodeURIComponent(aktifKod)}&yeniSifre=${encodeURIComponent(s1)}`);
+      YETKILI_LISTESI[aktifKod].sifre = s1;
+      mesaj.style.color = "#10b981";
+      mesaj.textContent = "Şifreniz başarıyla güncellendi! Sonraki girişlerinizde yeni şifrenizi kullanabilirsiniz.";
+    } catch (e) {
+      mesaj.style.color = "#dc2626";
+      mesaj.textContent = "Şifre kaydedilirken bağlantı hatası oluştu.";
+    }
+
+    btn.disabled = false;
+    btn.textContent = "Şifreyi Kaydet";
+  }
+
   function cikisYap() {
     aktifKullanici = null;
+    aktifKod = "";
     document.getElementById("uygulamaEkrani").style.display = "none";
     document.getElementById("loginEkrani").style.display = "flex";
     document.getElementById("kullaniciSifre").value = "";
@@ -255,7 +340,7 @@
 
   async function verileriGetirVeCiz() {
     const birimAdi = `${seciliAna} > ${seciliAlt} > ${seciliEkipman}`;
-    document.getElementById("icerikAlani").innerHTML = `<p style="padding:20px; color:#64748b;">Google E-Tablodan veriler getiriliyor...</p>`;
+    document.getElementById("icerikAlani").innerHTML = `<p style="padding:20px; color:#64748b;">Veriler getiriliyor...</p>`;
 
     try {
       const url = `${SCRIPT_URL}?action=listele&birim=${encodeURIComponent(birimAdi)}`;
@@ -270,7 +355,7 @@
       let satirlar = "";
       if (gosterilecekler.length === 0) {
         satirlar = `<tr><td colspan="4" style="text-align:center; color:#64748b;">Henüz kayıt bulunmuyor.</td></tr>`;
-     } else {
+      } else {
         gosterilecekler.forEach(k => {
           let temizTarih = String(k.tarih).replace(/^'/, "");
           if (temizTarih.includes("GMT") || temizTarih.length > 16) {
@@ -302,7 +387,7 @@
 
       const yoneticiBari = aktifKullanici.rol === "admin" ? `
         <div class="denetim-bar">
-          <span>Google E-Tabloda toplam <strong>${kayitDizisi.length}</strong> kayıt var</span>
+          <span>Arşivde toplam <strong>${kayitDizisi.length}</strong> kayıt var</span>
           <button class="arsiv-btn" onclick="tumunuGoster = !tumunuGoster; verileriGetirVeCiz();">
             ${tumunuGoster ? "Sadece Son 10 Kaydı Göster" : "Tüm Geçmişi Denetle (" + kayitDizisi.length + ")"}
           </button>
@@ -311,72 +396,3 @@
 
       const islemBasligi = aktifKullanici.rol === "admin" ? "<th>İşlem</th>" : "";
 
-      document.getElementById("icerikAlani").innerHTML = `
-        <button type="button" class="geri-btn" onclick="bolumSec('${seciliAna}', '${seciliAlt}')">&larr; ${seciliAlt} Seçeneklerine Dön</button>
-        <div class="breadcrumb">${seciliAna} &nbsp;/&nbsp; ${seciliAlt} &nbsp;/&nbsp; ${seciliEkipman}</div>
-        <h1>${seciliAlt} - ${seciliEkipman}</h1>
-        
-        <div class="ekle-formu">
-          <input type="text" id="yeniIsKutusu" placeholder="Yapılan işi yazın..." onkeydown="if(event.key==='Enter') veriEkle()">
-          <button type="button" id="ekleButon" onclick="veriEkle()">Veri Ekle</button>
-        </div>
-
-        ${yoneticiBari}
-
-        <div class="tablo-kapsayici">
-          <table class="veri-tablosu">
-            <thead>
-              <tr>
-                <th>Yapılan İş / Yazı</th>
-                <th>Tarih</th>
-                <th>Kimin Yazdığı</th>
-                ${islemBasligi}
-              </tr>
-            </thead>
-            <tbody>${satirlar}</tbody>
-          </table>
-        </div>
-      `;
-    } catch (e) {
-      document.getElementById("icerikAlani").innerHTML = `<p style="color:#dc2626; padding:20px;">Bağlantı Hatası: <strong>${e.message}</strong></p>`;
-    }
-  }
-
-  async function veriEkle() {
-    const kutu = document.getElementById("yeniIsKutusu");
-    const buton = document.getElementById("ekleButon");
-    const metin = kutu.value.trim();
-    if (!metin) return;
-
-    buton.disabled = true;
-    buton.textContent = "Kaydediliyor...";
-
-   const d = new Date();
-    const gun = ("0" + d.getDate()).slice(-2);
-    const ay = ("0" + (d.getMonth() + 1)).slice(-2);
-    const yil = d.getFullYear();
-    const saat = ("0" + d.getHours()).slice(-2);
-    const dakika = ("0" + d.getMinutes()).slice(-2);
-    const tarih = `'${gun}/${ay}/${yil} ${saat}:${dakika}`;
-  
-   const birimAdi = `${seciliAna} > ${seciliAlt} > ${seciliEkipman}`;
-
-    const url = `${SCRIPT_URL}?action=ekle&birim=${encodeURIComponent(birimAdi)}&yazi=${encodeURIComponent(metin)}&tarih=${encodeURIComponent(tarih)}&yazar=${encodeURIComponent(aktifKullanici.ad)}`;
-    await fetch(url);
-
-    verileriGetirVeCiz();
-  }
-
-  async function kayitSil(kayitId) {
-    if (aktifKullanici.rol !== "admin") return;
-    if (!confirm("Bu kaydı Google E-Tablodan kalıcı olarak silmek istediğinize emin misiniz?")) return;
-
-    const url = `${SCRIPT_URL}?action=sil&id=${encodeURIComponent(kayitId)}`;
-    await fetch(url);
-
-    verileriGetirVeCiz();
-  }
-</script>
-
-</body>
-</html>
