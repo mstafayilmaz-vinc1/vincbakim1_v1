@@ -270,8 +270,21 @@
       let satirlar = "";
       if (gosterilecekler.length === 0) {
         satirlar = `<tr><td colspan="4" style="text-align:center; color:#64748b;">Henüz kayıt bulunmuyor.</td></tr>`;
-      } else {
+     } else {
         gosterilecekler.forEach(k => {
+          let temizTarih = String(k.tarih).replace(/^'/, "");
+          if (temizTarih.includes("GMT") || temizTarih.length > 16) {
+            const dt = new Date(temizTarih);
+            if (!isNaN(dt.getTime())) {
+              const g = ("0" + dt.getDate()).slice(-2);
+              const a = ("0" + (dt.getMonth() + 1)).slice(-2);
+              const y = dt.getFullYear();
+              const s = ("0" + dt.getHours()).slice(-2);
+              const d = ("0" + dt.getMinutes()).slice(-2);
+              temizTarih = `${g}/${a}/${y} ${s}:${d}`;
+            }
+          }
+
           const silSutunu = aktifKullanici.rol === "admin" 
             ? `<td><button class="sil-btn" onclick="kayitSil('${k.id}')">Sil</button></td>` 
             : "";
@@ -279,7 +292,7 @@
           satirlar += `
             <tr>
               <td style="width:55%; font-weight:500;">${k.yazi}</td>
-              <td style="width:20%; color:#64748b;">${k.tarih}</td>
+              <td style="width:20%; color:#64748b;">${temizTarih}</td>
               <td style="width:20%; font-weight:600;">${k.yazar}</td>
               ${silSutunu}
             </tr>
